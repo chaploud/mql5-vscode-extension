@@ -1,0 +1,25 @@
+{
+  "name": "mql5",
+  "displayName": "MQL5",
+  "description": "MQL5 Language Support",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "mql5",
+      "aliases": ["MQL5", "mql5"],
+      "extensions": [".mq5"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "mql5",
+      "scopeName": "source.mql5",
+      "path": "./syntaxes/mql5.tmLanguage.json"
+    }]
+  }
+}
