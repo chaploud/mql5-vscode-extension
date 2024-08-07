@@ -25,3 +25,24 @@ Enter the root scope name of the grammar (e.g. source.ruby)
 ? Scope names: source.mql5
 ? Initialize a git repository? Yes
 ```
+
+## 設計
+
+- どのディレクトリでも対応できるようにする
+- コンパイラのパス設定くらいは要求する
+- 補完を完璧にこなす
+- includeした関数なども補完対象に含める
+
+## MetaEditor.exe
+
+```text
+Usage:
+
+MetaEditor64.exe /compile:"path" [/include:"path"] [/project] [/log] [/s]
+
+/compile:"path" - source file, folder or project file path
+/project - compile project file
+/include:"path" - path to MQL4/MQL5 folder
+/log - create compilation log file
+/s - check a program syntax without comilation
+```

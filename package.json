@@ -1,25 +1,144 @@
 {
   "name": "mql5",
   "displayName": "MQL5",
-  "description": "MQL5 Language Support",
+  "description": "MQL5 Language Support for Visual Studio Code",
   "version": "0.0.1",
+  "publisher": "chaploud",
   "engines": {
     "vscode": "^1.92.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "keywords": [
+    "mql5",
+    "mqh"
+  ],
+  "icon": "images/MQL5_Community_Logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chaploud/mql5-vscode-extension"
+  },
+  "activationEvents": [
+    "onLanguage:cpp"
+  ],
+  "main": "./out/main.js",
+  "extensionDependencies": [
+    "ms-vscode.cpptools"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run build-base -- --minify",
+    "package": "vsce package -o mql5.vsix",
+    "build-base": "esbuild ./src/main.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=node20",
+    "build": "npm run build-base -- --sourcemap",
+    "watch": "npm run build-base -- --sourcemap --watch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint -c .eslintrc.js --ext ts ./src ./tests",
+    "lint:fix": "npm run lint -- --fix",
+    "typecheck": "tsc",
+    "pretest": "npm run typecheck && npm run build",
+    "test": "node ./out/tests/runTests.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/node": "^22.1.0",
+    "@types/vscode": "^1.92.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.1",
+    "@typescript-eslint/parser": "^8.0.1",
+    "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^2.31.1",
+    "esbuild": "^0.23.0",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "ovsx": "^0.9.2",
+    "prettier": "^3.3.3",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4"
+  },
   "contributes": {
-    "languages": [{
-      "id": "mql5",
-      "aliases": ["MQL5", "mql5"],
-      "extensions": [".mq5"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "mql5",
-      "scopeName": "source.mql5",
-      "path": "./syntaxes/mql5.tmLanguage.json"
-    }]
+    "taskDefinitions": [],
+    "commands": [
+      {
+        "command": "mql5.compile",
+        "title": "Compile MQL5 File"
+      },
+      {
+        "command": "mql5.compileAndRun",
+        "title": "Compile and Run MQL5 File"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "mql5.compile",
+        "key": "ctrl+f7",
+        "mac": "cmd+f7",
+        "when": "editorLangId == cpp"
+      },
+      {
+        "command": "mql5.compileAndRun",
+        "key": "f7",
+        "when": "editorLangId == cpp"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "MQL5",
+        "properties": {
+          "mql5.compilerPath": {
+            "type": "string",
+            "default": "C:\\Program Files\\MetaTrader 5\\metaeditor64.exe",
+            "description": "Path to the MetaEditor executable"
+          },
+          "mql5.compilerArgs": {
+            "type": "array",
+            "default": [],
+            "description": "Additional arguments to pass to the compiler"
+          }
+        }
+      }
+    ],
+    "configurationDefaults": {},
+    "problemPatterns": [],
+    "languages": [
+      {
+        "id": "cpp",
+        "extensions": [
+          ".mq5",
+          ".mqh"
+        ],
+        "configuration": "language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "cpp",
+        "scopeName": "source.mql",
+        "path": "./syntaxes/mql5.tmLanguage.json"
+      },
+      {
+        "language": "mql-output",
+        "scopeName": "mql.outpt",
+        "path": "./syntaxes/mql.out.tmLanguage.json"
+      }
+    ],
+    "problemMatchers": [],
+    "colors": [],
+    "semanticTokenTypes": [],
+    "semanticTokenModifiers": [],
+    "semanticTokenScopes": [],
+    "menus": {
+      "commandPalette": [],
+      "editor/context": [],
+      "editor/title": [],
+      "explorer/context": []
+    },
+    "submenus": [],
+    "views": {
+      "explorer": []
+    },
+    "jsonValidation": [],
+    "walkthroughs": []
   }
 }
